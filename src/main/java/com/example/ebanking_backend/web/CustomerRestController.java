@@ -3,7 +3,7 @@ package com.example.ebanking_backend.web;
 
 import com.example.ebanking_backend.dtos.CustomerDTO;
 import com.example.ebanking_backend.exceptions.CustomerNotFoundException;
-import com.example.ebanking_backend.services.BankAccountService;
+import com.example.ebanking_backend.services.CreditService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin("*")
 
 public class CustomerRestController {
-    private BankAccountService bankAccountService;
+    private CreditService bankAccountService;
     @GetMapping("/customers")
     public List<CustomerDTO> customers(){
         return bankAccountService.listCustomers();

@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("PERSONNEL")
+@DiscriminatorValue("PROFESSIONNEL")
 
 @Data
 @AllArgsConstructor

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -16,7 +17,7 @@ public class Remboursement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date;
+    private Date dateRemboursement;
     private Double montant;
     private String type; // Mensualité ou Remboursement anticipé
 

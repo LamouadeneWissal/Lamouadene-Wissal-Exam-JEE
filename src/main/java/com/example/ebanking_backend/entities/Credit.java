@@ -17,7 +17,6 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="TYPE-CREDIT", length=4)
 
-
 public class Credit {
 
     @Id
