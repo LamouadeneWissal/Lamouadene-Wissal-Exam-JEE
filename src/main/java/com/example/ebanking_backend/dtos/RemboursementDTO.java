@@ -1,26 +1,18 @@
-package com.example.ebanking_backend.entities;
+package com.example.ebanking_backend.dtos;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Remboursement {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class RemboursementDTO {
     private Long id;
-
     private LocalDate date;
     private Double montant;
     private String type; // Mensualité ou Remboursement anticipé
-
-    @ManyToOne
-    @JoinColumn(name = "credit_id")
-    private Credit credit;
+    private Long creditId;
 }

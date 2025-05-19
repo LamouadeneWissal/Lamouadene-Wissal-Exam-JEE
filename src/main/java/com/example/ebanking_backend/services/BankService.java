@@ -3,7 +3,7 @@ package com.example.ebanking_backend.services;
 import com.example.ebanking_backend.entities.Credit;
 import com.example.ebanking_backend.entities.CreditImmobilier;
 import com.example.ebanking_backend.entities.CreditPersonnel;
-import com.example.ebanking_backend.repositories.BankAccountRepository;
+import com.example.ebanking_backend.repositories.CreditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BankService {
     @Autowired
-    private BankAccountRepository bankAccountRepository;
+    private CreditRepository bankAccountRepository;
     public void consulter(){
         Credit bankAccount=
                 bankAccountRepository.findById("0b36be78-8d5d-446b-9f20-37eadc9d3c3b").orElse(null);

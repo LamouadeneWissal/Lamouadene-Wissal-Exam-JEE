@@ -1,9 +1,8 @@
 package com.example.ebanking_backend.mappers;
 
-import com.example.ebanking_backend.dtos.AccountOperationDTO;
-import com.example.ebanking_backend.dtos.CurrentBankAccountDTO;
+import com.example.ebanking_backend.dtos.CreditImmobilierDTO;
 import com.example.ebanking_backend.dtos.CustomerDTO;
-import com.example.ebanking_backend.dtos.SavingBankAccountDTO;
+import com.example.ebanking_backend.dtos.CreditPersonnelDTO;
 import com.example.ebanking_backend.entities.CreditImmobilier;
 import com.example.ebanking_backend.entities.Customer;
 import com.example.ebanking_backend.entities.CreditPersonnel;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class BankAccountMapperImpl {
+public class CreditMapperImpl {
     public CustomerDTO fromCustomer(Customer customer){
         CustomerDTO customerDTO=new CustomerDTO();
         BeanUtils.copyProperties(customer,customerDTO);
@@ -24,30 +23,30 @@ public class BankAccountMapperImpl {
         return  customer;
     }
 
-    public SavingBankAccountDTO fromSavingBankAccount(CreditPersonnel savingAccount){
-        SavingBankAccountDTO savingBankAccountDTO=new SavingBankAccountDTO();
+    public CreditPersonnelDTO fromSavingBankAccount(CreditPersonnel savingAccount){
+        CreditPersonnelDTO savingBankAccountDTO=new CreditPersonnelDTO();
         BeanUtils.copyProperties(savingAccount,savingBankAccountDTO);
         savingBankAccountDTO.setCustomerDTO(fromCustomer(savingAccount.getCustomer()));
         savingBankAccountDTO.setType(savingAccount.getClass().getSimpleName());
         return savingBankAccountDTO;
     }
 
-    public CreditPersonnel fromSavingBankAccountDTO(SavingBankAccountDTO savingBankAccountDTO){
+    public CreditPersonnel fromSavingBankAccountDTO(CreditPersonnelDTO savingBankAccountDTO){
         CreditPersonnel savingAccount=new CreditPersonnel();
         BeanUtils.copyProperties(savingBankAccountDTO,savingAccount);
         savingAccount.setCustomer(fromCustomerDTO(savingBankAccountDTO.getCustomerDTO()));
         return savingAccount;
     }
 
-    public CurrentBankAccountDTO fromCurrentBankAccount(CreditImmobilier currentAccount){
-        CurrentBankAccountDTO currentBankAccountDTO=new CurrentBankAccountDTO();
+    public CreditImmobilierDTO fromCurrentBankAccount(CreditImmobilier currentAccount){
+        CreditImmobilierDTO currentBankAccountDTO=new CreditImmobilierDTO();
         BeanUtils.copyProperties(currentAccount,currentBankAccountDTO);
         currentBankAccountDTO.setCustomerDTO(fromCustomer(currentAccount.getCustomer()));
         currentBankAccountDTO.setType(currentAccount.getClass().getSimpleName());
         return currentBankAccountDTO;
     }
 
-    public CreditImmobilier fromCurrentBankAccountDTO(CurrentBankAccountDTO currentBankAccountDTO){
+    public CreditImmobilier fromCurrentBankAccountDTO(CreditImmobilierDTO currentBankAccountDTO){
         CreditImmobilier currentAccount=new CreditImmobilier();
         BeanUtils.copyProperties(currentBankAccountDTO,currentAccount);
         currentAccount.setCustomer(fromCustomerDTO(currentBankAccountDTO.getCustomerDTO()));

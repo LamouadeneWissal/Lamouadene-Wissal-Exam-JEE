@@ -3,10 +3,9 @@ package com.example.ebanking_backend;
 import com.example.ebanking_backend.dtos.*;
 import com.example.ebanking_backend.entities.*;
 import com.example.ebanking_backend.enums.StatusCredit;
-import com.example.ebanking_backend.enums.OperationType;
 import com.example.ebanking_backend.exceptions.CustomerNotFoundException;
 import com.example.ebanking_backend.repositories.AccountOperationRepository;
-import com.example.ebanking_backend.repositories.BankAccountRepository;
+import com.example.ebanking_backend.repositories.CreditRepository;
 import com.example.ebanking_backend.repositories.CustomerRepository;
 import com.example.ebanking_backend.services.BankAccountService;
 import org.springframework.boot.CommandLineRunner;
@@ -49,14 +48,14 @@ public class EbankingBackendApplication {
             });
 
             // Add transactions (credits and debits) to each account
-            List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
-            for (BankAccountDTO bankAccount : bankAccounts) {
+            List<BaseCreditDTO> bankAccounts = bankAccountService.bankAccountList();
+            for (BaseCreditDTO bankAccount : bankAccounts) {
                 for (int i = 0; i < 10; i++) {
                     String accountId;
-                    if (bankAccount instanceof SavingBankAccountDTO) {
-                        accountId = ((SavingBankAccountDTO) bankAccount).getId();
+                    if (bankAccount instanceof CreditPersonnelDTO) {
+                        accountId = ((CreditPersonnelDTO) bankAccount).getId();
                     } else {
-                        accountId = ((CurrentBankAccountDTO) bankAccount).getId();
+                        accountId = ((CreditImmobilierDTO) bankAccount).getId();
                     }
                     bankAccountService.credit(accountId, 10000 + Math.random() * 120000, "Credit");
                     bankAccountService.debit(accountId, 1000 + Math.random() * 9000, "Debit");
@@ -68,7 +67,7 @@ public class EbankingBackendApplication {
 
     //@Bean
     CommandLineRunner start(CustomerRepository customerRepository,
-                            BankAccountRepository bankAccountRepository,
+                            CreditRepository bankAccountRepository,
                             AccountOperationRepository accountOperationRepository){
         return args -> {
             Stream.of("Hassan","Yassine","Aicha").forEach(name->{

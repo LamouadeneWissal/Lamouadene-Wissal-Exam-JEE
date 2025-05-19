@@ -19,11 +19,11 @@ public class BankAccountRestAPI {
     }
 
     @GetMapping("/accounts/{accountId}")
-    public BankAccountDTO getBankAccount(@PathVariable String accountId) throws BankAccountNotFoundException {
+    public BaseCreditDTO getBankAccount(@PathVariable String accountId) throws BankAccountNotFoundException {
         return bankAccountService.getBankAccount(accountId);
     }
     @GetMapping("/accounts")
-    public List<BankAccountDTO> listAccounts(){
+    public List<BaseCreditDTO> listAccounts(){
         return bankAccountService.bankAccountList();
     }
     @GetMapping("/accounts/{accountId}/operations")
@@ -49,7 +49,7 @@ public class BankAccountRestAPI {
         return creditDTO;
     }
     @PostMapping("/accounts/transfer")
-    public void transfer(@RequestBody TransferRequestDTO transferRequestDTO) throws BankAccountNotFoundException, BalanceNotSufficientException {
+    public void transfer(@RequestBody RemboursementDTO transferRequestDTO) throws BankAccountNotFoundException, BalanceNotSufficientException {
         this.bankAccountService.transfer(
                 transferRequestDTO.getAccountSource(),
                 transferRequestDTO.getAccountDestination(),

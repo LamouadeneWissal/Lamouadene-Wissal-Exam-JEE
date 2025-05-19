@@ -2,10 +2,9 @@ package com.example.ebanking_backend.services;
 
 import com.example.ebanking_backend.dtos.*;
 import com.example.ebanking_backend.entities.*;
-import com.example.ebanking_backend.enums.OperationType;
-import com.example.ebanking_backend.mappers.BankAccountMapperImpl;
+import com.example.ebanking_backend.mappers.CreditMapperImpl;
 import com.example.ebanking_backend.repositories.AccountOperationRepository;
-import com.example.ebanking_backend.repositories.BankAccountRepository;
+import com.example.ebanking_backend.repositories.CreditRepository;
 import com.example.ebanking_backend.repositories.CustomerRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -31,9 +30,9 @@ import java.util.stream.Collectors;
 public class BankAccountServiceImpl implements BankAccountService {
 
     private CustomerRepository customerRepository;
-    private BankAccountRepository bankAccountRepository;
+    private CreditRepository bankAccountRepository;
     private AccountOperationRepository accountOperationRepository;
-    private BankAccountMapperImpl dtoMapper;
+    private CreditMapperImpl dtoMapper;
 
     @Override
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
@@ -44,7 +43,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException {
+    public CreditImmobilierDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException {
         Customer customer=customerRepository.findById(customerId).orElse(null);
         if(customer==null)
             throw new CustomerNotFoundException("Customer not found");
@@ -59,7 +58,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException {
+    public CreditPersonnelDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException {
         Customer customer=customerRepository.findById(customerId).orElse(null);
         if(customer==null)
             throw new CustomerNotFoundException("Customer not found");
@@ -91,7 +90,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException {
+    public BaseCreditDTO getBankAccount(String accountId) throws BankAccountNotFoundException {
         Credit bankAccount=bankAccountRepository.findById(accountId)
                 .orElseThrow(()->new BankAccountNotFoundException("BankAccount not found"));
         if(bankAccount instanceof CreditPersonnel){
@@ -141,9 +140,9 @@ public class BankAccountServiceImpl implements BankAccountService {
         credit(accountIdDestination,amount,"Transfer from "+accountIdSource);
     }
     @Override
-    public List<BankAccountDTO> bankAccountList(){
+    public List<BaseCreditDTO> bankAccountList(){
         List<Credit> bankAccounts = bankAccountRepository.findAll();
-        List<BankAccountDTO> bankAccountDTOS = bankAccounts.stream().map(bankAccount -> {
+        List<BaseCreditDTO> bankAccountDTOS = bankAccounts.stream().map(bankAccount -> {
             if (bankAccount instanceof CreditPersonnel) {
                 CreditPersonnel savingAccount = (CreditPersonnel) bankAccount;
                 return dtoMapper.fromSavingBankAccount(savingAccount);
